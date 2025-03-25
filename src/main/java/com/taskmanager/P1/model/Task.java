@@ -1,9 +1,6 @@
 package com.taskmanager.P1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -15,6 +12,7 @@ import lombok.*;
 public class Task {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long taskId;
     private String taskName;
     private String description;
