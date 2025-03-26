@@ -3,10 +3,12 @@ package com.taskmanager.P1.controller;
 import com.taskmanager.P1.model.Task;
 import com.taskmanager.P1.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/tasks")
 @RestController
 public class TaskController {
 
@@ -20,10 +22,11 @@ public class TaskController {
     }
 
     @GetMapping("/findtaskbyid/{id}")
-    public Task findTaskById(@RequestBody Long id)
-    {
-        return taskService.findTaskById(id);
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+        Task task = taskService.findTaskById(id);
+        return ResponseEntity.ok(task);
     }
+
 
     @PostMapping("/create")
     public Task createTask(@RequestBody Task task)
@@ -31,10 +34,25 @@ public class TaskController {
         return taskService.createTask(task);
     }
 
-    @PostMapping("/update")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task)
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task)
     {
-        return taskService.updateTask(id,task);
+        Task task1 = taskService.updateTask(id,task);
+        return ResponseEntity.ok(task1);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long id)
+    {
+        taskService.deleteTask(id);
+        return ResponseEntity.ok("Task deleted successfully");
+    }
+
+    @PutMapping("/updatestatus/{id}")
+    public ResponseEntity<String> updateStatus(@PathVariable Long id ,  @RequestBody String status)
+    {
+        Task task1 = taskService.updateStatus(id,status);
+        return ResponseEntity.ok("Updated Successfully");
     }
 
 
