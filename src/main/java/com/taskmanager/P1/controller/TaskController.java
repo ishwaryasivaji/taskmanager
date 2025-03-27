@@ -1,14 +1,18 @@
 package com.taskmanager.P1.controller;
 
+import com.taskmanager.P1.dto.StatusUpdateDTO;
 import com.taskmanager.P1.model.Task;
 import com.taskmanager.P1.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/tasks")
+@Validated
 @RestController
 public class TaskController {
 
@@ -29,7 +33,7 @@ public class TaskController {
 
 
     @PostMapping("/create")
-    public Task createTask(@RequestBody Task task)
+    public Task createTask(@RequestBody @Valid Task task)
     {
         return taskService.createTask(task);
     }
@@ -48,12 +52,12 @@ public class TaskController {
         return ResponseEntity.ok("Task deleted successfully");
     }
 
-    @PutMapping("/updatestatus/{id}")
-    public ResponseEntity<String> updateStatus(@PathVariable Long id ,  @RequestBody String status)
-    {
-        Task task1 = taskService.updateStatus(id,status);
-        return ResponseEntity.ok("Updated Successfully");
+    @PatchMapping("/updatestatus/{id}")
+    public ResponseEntity<Task> updateStatus(@PathVariable Long id, @Valid @RequestBody StatusUpdateDTO statusUpdateDTO) {
+        Task updatedTask = taskService.updateStatus(id, statusUpdateDTO.getStatus());
+        return ResponseEntity.ok(updatedTask);
     }
+
 
 
 }
