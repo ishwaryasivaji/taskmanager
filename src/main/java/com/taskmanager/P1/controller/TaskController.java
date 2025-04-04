@@ -19,6 +19,12 @@ public class TaskController {
     @Autowired
     public TaskService taskService;
 
+    @PostMapping("/create")
+    public Task createTask(@RequestBody @Valid Task task)
+    {
+        return taskService.createTask(task);
+    }
+
     @GetMapping("/getalltasks")
     public List<Task> getAllTasks()
     {
@@ -32,11 +38,6 @@ public class TaskController {
     }
 
 
-    @PostMapping("/create")
-    public Task createTask(@RequestBody @Valid Task task)
-    {
-        return taskService.createTask(task);
-    }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task)
@@ -58,6 +59,10 @@ public class TaskController {
         return ResponseEntity.ok(updatedTask);
     }
 
+    @GetMapping("/overdue")
+    public List<Task> getOverdueTasks() {
+        return taskService.getAllOverdueTasks();
+    }
 
 
 }

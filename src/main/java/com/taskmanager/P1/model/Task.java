@@ -3,6 +3,9 @@ package com.taskmanager.P1.model;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.Pattern;
+
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,5 +22,7 @@ public class Task {
 
     @Pattern(regexp = "Pending|In Progress|Completed",message = "Status must be 'Pending', 'In Progress', or 'Completed'")
     private String status;
+
+    private LocalDate dueDate;
 
 }

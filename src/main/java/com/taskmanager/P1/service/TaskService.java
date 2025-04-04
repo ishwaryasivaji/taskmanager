@@ -63,4 +63,8 @@ public class TaskService {
         task.setStatus(status);
         return taskRepository.save(task);
     }
+
+    public List<Task> getAllOverdueTasks() {
+        return taskRepository.findOverdueTasks();
+    }
 }
